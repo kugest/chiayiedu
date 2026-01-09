@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>嘉義市教育會 | Chiayi City Education Association</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+    <style>
+        :root {
+            --primary-color: #003366;
+            --accent-color: #FFC107;
+            --bg-light: #f8f9fa;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-dark);
+            padding-top: 70px; /* 手機版導航欄高度 */
+            background-color: #fcfcfc;
+            -webkit-font-smoothing: antialiased; /* 讓 iOS 字體更清晰 */
+        }
+
+        /* === 導航欄 Mobile 優化 === */
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0.8rem 0; /* 增加手指點擊範圍 */
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.3rem; /* 手機版字體微調 */
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #555;
+            margin: 0 10px;
+            padding: 10px 0; /* 增加垂直間距，方便手指點擊 */
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        .btn-login {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            padding: 8px 30px; /* 加大按鈕 */
+            width: 100%; /* 手機選單中滿寬顯示 */
+        }
+        
+        /* === Hero 區塊 Mobile 適配 === */
+        .hero-section {
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.7)), url('https://picsum.photos/1920/800?grayscale');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0; /* 手機版減少 padding */
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 2rem; /* 手機版標題縮小 */
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* === 標題與版面 === */
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.75rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        .section-padding { padding: 60px 0; } /* 手機版縮減區塊間距 */
+
+        /* === 篩選器 Mobile 優化 === */
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        /* 手機版按鈕群組改為可滑動或堆疊 */
+        .filter-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .filter-btn-group .btn {
+            border-radius: 20px;
+            font-size: 0.9rem;
+            padding: 6px 16px;
+            flex: 0 0 auto; /* 防止按鈕被壓縮 */
+        }
+        .form-select {
+            font-size: 16px; /* iOS 防止縮放 */
+        }
+
+        /* === 相簿卡片 Mobile 優化 === */
+        .album-card {
+            display: block; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08); /* 陰影調淡 */
+            height: 100%;
+            text-decoration: none; 
+            position: relative;
+            color: inherit;
+        }
+        .album-img-wrapper {
+            position: relative;
+            padding-top: 66.66%;
+            overflow: hidden;
+            background: #eee;
+        }
+        .album-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .school-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 51, 102, 0.9);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            z-index: 2;
+        }
+        .album-info { padding: 15px; }
+        .album-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+            line-height: 1.4;
+            /* 限制標題行數，保持整齊 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .album-meta {
+            font-size: 0.85rem;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* === 最新消息 === */
+        .news-item {
+            border-left: 4px solid var(--accent-color);
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .news-date {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        .badge { font-weight: 500; }
+
+        /* === 聯絡資訊與 Footer === */
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .contact-icon {
+            background-color: #f0f2f5;
+            padding: 12px;
+            border-radius: 50%;
+            color: var(--primary-color);
+            margin-right: 15px;
+            min-width: 45px;
+            text-align: center;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        /* === Media Queries 針對大螢幕的調整 === */
+        @media (min-width: 992px) {
+            body { padding-top: 76px; }
+            .hero-section { padding: 120px 0; }
+            .hero-title { font-size: 3.5rem; }
+            .section-padding { padding: 80px 0; }
+            .btn-login { width: auto; }
+            
+            /* 桌面版 Hover 特效 */
+            .album-img { transition: transform 0.6s; }
+            .album-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+            .album-card:hover .album-img { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-graduation-cap me-2"></i>嘉義市教育會
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#home">首頁</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#news">最新消息</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#albums">活動相簿</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">聯絡我們</a></li>
+                    <li class="nav-item ms-lg-3 w-100 w-lg-auto mt-3 mt-lg-0" id="auth-section">
+                        <button class="btn btn-login shadow-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fa-solid fa-user me-1"></i> 會員登入
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero-section">
+        <div class="container px-4">
+            <h1 class="hero-title">凝聚教育熱忱<br class="d-md-none">共創美好未來</h1>
+            <p class="hero-subtitle mb-4 text-light">嘉義市教育會 - 教師專業成長與交流的最佳平台</p>
+            <a href="#albums" class="btn btn-warning btn-lg px-5 fw-bold rounded-pill shadow">瀏覽活動成果</a>
+        </div>
+    </header>
+
+    <section id="news" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">最新消息與公告</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10" id="news-container">
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="albums" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">精彩活動相簿</h2>
+            <p class="text-center text-muted mb-4 px-3">點擊相簿封面即可開啟瀏覽，支援左右滑動切換</p>
+
+            <div class="filter-section mx-2 mx-md-0">
+                <div class="row g-3 align-items-center justify-content-center justify-content-md-between">
+                    <div class="col-md-auto text-center">
+                        <div class="filter-btn-group" role="group" id="category-filters">
+                            <button type="button" class="btn btn-primary active" data-filter="all">全部活動</button>
+                            <button type="button" class="btn btn-outline-primary" data-filter="敬師活動">敬師表揚</button>
+                            <button type="button" class="btn btn-outline-primary" data-filter="聯誼休閒">聯誼/節慶</button>
+                            <button type="button" class="btn btn-outline-primary" data-filter="體育交流">體育交流</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select rounded-pill border-2" id="school-filter">
+                            <option value="all" selected>🔍 篩選學校單位...</option>
+                            <option value="北園國小">北園國小</option>
+                            <option value="民族國小">民族國小</option>
+                            <option value="博愛國小">博愛國小</option>
+                            <option value="港坪國小">港坪國小</option>
+                            <option value="僑平國小">僑平國小</option>
+                            <option value="嘉義市大同國小">大同國小</option>
+                            <option value="國立嘉義大學">嘉義大學</option>
+                            <option value="國立嘉義高級中學">嘉義高中</option>
+                            <option value="嘉義高工">嘉義高工</option>
+                            <option value="嘉義市立吳鳳幼兒園">吳鳳幼兒園</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 g-md-4" id="albums-container">
+                </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding bg-white border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3 class="fw-bold mb-4 text-primary ps-2 border-start border-4 border-warning">聯絡我們</h3>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt fa-lg"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">會址</h6>
+                            <p class="mb-0 text-muted">600355嘉義市鹿寮里學府路300號</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt fa-lg"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">電話</h6>
+                            <p class="mb-0 text-muted"><a href="tel:052717050" class="text-decoration-none text-muted">05-2717050</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-envelope fa-lg"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Email</h6>
+                            <p class="mb-0 text-muted"><a href="mailto:kugest@mail.ncyu.edu.tw" class="text-decoration-none text-muted">kugest@mail.ncyu.edu.tw</a> (會務)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="ratio ratio-16x9 shadow-sm rounded overflow-hidden h-100" style="min-height: 250px;">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=嘉義市鹿寮里學府路300號&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">© 2025 嘉義市教育會 版權所有</p>
+            <small class="opacity-75">Designed for Chiayi City Education Association</small>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary">會員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="loginForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="帳號" required style="font-size: 16px;">
+                            <label for="username">帳號</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="密碼" required style="font-size: 16px;">
+                            <label for="password">密碼</label>
+                        </div>
+                        <div id="login-error" class="text-danger small mb-3 text-center"></div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill">登入系統</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    
+    <script>
+        // === 資料設定區 ===
+        const UPLOAD_PATH = 'uploads/';
+        
+        // 完整的活動資料
+        const FULL_DATA = {
+            news: [
+                { id: 4, title: '【體育賽事】教育會羽球聯誼賽 嘉義高工熱血開打', date: '2025-10-01', category: '體育交流', desc: '以球會友，增進校際情誼，恭喜獲勝隊伍！' },
+                { id: 2, title: '【聯誼資訊】嘉義大學教職員新春健行圓滿成功', date: '2025-02-07', category: '聯誼休閒', desc: '新春時節，教職員漫步校園，享受健康與情誼的交流時光。' },
+                { id: 1, title: '【活動成果】114年度敬師活動成果豐碩，感謝各校熱烈響應', date: '2025-09-28', category: '活動快訊', desc: '北園、民族、博愛等多所學校舉辦創意敬師活動，照片已全數上傳。' },
+                { id: 3, title: '【活動快訊】嘉義高中聖誕聯歡晚會溫馨登場', date: '2025-12-24', category: '聯誼休閒', desc: '全校師生共度平安夜，精彩表演與交換禮物讓校園充滿歡笑。' }
+            ],
+            albums: [
+                { 
+                    id: 1, school: '北園國小', title: '114年度敬師感恩活動', category: '敬師活動', date: '2025-09-19', 
+                    cover: '北園國小/LINE_ALBUM_1140919敬師活動_250919_37.jpg', count: 12,
+                    photos: [
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_37.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_5.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_29.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_54.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_12.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_15.jpg',
+                        '北園國小/S__73670675.jpg',
+                        '北園國小/LINE_ALBUM_1140919敬師活動_250919_64.jpg'
+                    ]
+                },
+                { 
+                    id: 2, school: '民族國小', title: '謝師感恩廊道與讀經活動', category: '敬師活動', date: '2025-09-28', 
+                    cover: '民族國小/114年度敬師活動/謝師感恩廊道-1.jpg', count: 10,
+                    photos: [
+                        '民族國小/114年度敬師活動/謝師感恩廊道-1.jpg',
+                        '民族國小/114年度敬師活動/學生齊聲朗誦.jpg',
+                        '民族國小/114年度敬師活動/老師與學生於午餐時間收聽.jpg',
+                        '民族國小/114年度敬師活動/謝師牆滿是對老師的感謝.jpg',
+                        '民族國小/114年度敬師活動/自治市政府主持謝師點播站.jpg',
+                        '民族國小/114年度敬師活動/國樂團奏響悠揚的樂音.jpg'
+                    ]
+                },
+                { 
+                    id: 3, school: '國立嘉義大學', title: '114年度新春聯誼健行', category: '聯誼休閒', date: '2025-02-07', 
+                    cover: '國立嘉義大學/圖片1.jpg', count: 6,
+                    photos: ['國立嘉義大學/圖片1.jpg', '國立嘉義大學/圖片2.jpg', '國立嘉義大學/圖片3.jpg', '國立嘉義大學/圖片4.jpg', '國立嘉義大學/圖片5.jpg']
+                },
+                { 
+                    id: 4, school: '國立嘉義高級中學', title: '聖誕聯歡晚會', category: '聯誼休閒', date: '2025-12-24', 
+                    cover: '國立嘉義高級中學/1141224嘉義高中聖誕活動照片5.jpg', count: 8,
+                    photos: [
+                        '國立嘉義高級中學/1141224嘉義高中聖誕活動照片5.jpg',
+                        '國立嘉義高級中學/1141224嘉義高中聖誕活動照片3.jpg',
+                        '國立嘉義高級中學/1141224嘉義高中聖誕活動照片1.jpg',
+                        '國立嘉義高級中學/1141224嘉義高中聖誕活動照片2.jpg'
+                    ]
+                },
+                { 
+                    id: 5, school: '博愛國小', title: '教師節系列活動', category: '敬師活動', date: '2025-09-27', 
+                    cover: '博愛國小/LINE_ALBUM_114年教師節系列活動_250927_1.jpg', count: 6,
+                    photos: ['博愛國小/LINE_ALBUM_114年教師節系列活動_250927_1.jpg', '博愛國小/LINE_ALBUM_114年教師節系列活動_250927_2.jpg', '博愛國小/LINE_ALBUM_114年教師節系列活動_250927_3.jpg', '博愛國小/LINE_ALBUM_114年教師節系列活動_250927_4.jpg']
+                },
+                { 
+                    id: 6, school: '港坪國小', title: '一年級敬師活動', category: '敬師活動', date: '2025-09-26', 
+                    cover: '港坪/LINE_ALBUM_0926敬師活動_250926_17.jpg', count: 9,
+                    photos: ['港坪/LINE_ALBUM_0926敬師活動_250926_17.jpg', '港坪/LINE_ALBUM_114一年級教師節活動_250922_4.jpg', '港坪/LINE_ALBUM_114一年級教師節活動_250922_11.jpg', '港坪/382365.jpg']
+                },
+                { 
+                    id: 7, school: '僑平國小', title: '創意敬師活動', category: '敬師活動', date: '2025-09-28', 
+                    cover: '僑平國小/2-6.jpg', count: 15,
+                    photos: ['僑平國小/2-6.jpg', '僑平國小/3-2.jpg', '僑平國小/1-1.jpg', '僑平國小/1-5.jpg', '僑平國小/3-6.jpg', '僑平國小/2-2.jpg', '僑平國小/3-1.jpg']
+                },
+                { 
+                    id: 8, school: '嘉義市大同國小', title: '按讚點唱機 & 敬師採訪', category: '敬師活動', date: '2025-09-28', 
+                    cover: '嘉義市大同國小/1.按讚點唱機~活動宣傳內容.jpg', count: 12,
+                    photos: [
+                        '嘉義市大同國小/1.按讚點唱機~活動宣傳內容.jpg', 
+                        '嘉義市大同國小/2.按讚點唱機~606班真情告白.jpg',
+                        '嘉義市大同國小/12.按讚點唱機~點歌單.jpg',
+                        '嘉義市大同國小/10.「小記者採訪 」任務單~六年級.jpg',
+                        '嘉義市大同國小/4.按讚點唱機~自治市團隊服務學生.jpg'
+                    ]
+                },
+                { 
+                    id: 9, school: '嘉義市立吳鳳幼兒園', title: '母親節與教師節活動', category: '敬師活動', date: '2025-05-10', 
+                    cover: 'https://placehold.co/600x400/003366/fff?text=WuFeng+Preschool', count: 0,
+                    photos: [], 
+                    note: '請下載成果報告 PDF 觀看。'
+                },
+                { 
+                    id: 10, school: '嘉義高工', title: '教育會羽球聯誼賽', category: '體育交流', date: '2025-10-01', 
+                    cover: 'https://placehold.co/600x400/333/fff?text=Badminton+Game', count: 0,
+                    photos: [], 
+                    note: '請參閱附件 PDF 成果報告。'
+                }
+            ]
+        };
+
+        // === 核心程式 ===
+        const App = {
+            currentFilter: { category: 'all', school: 'all' },
+            lightbox: null,
+
+            init() {
+                this.checkLoginStatus();
+                this.loadNews();
+                this.renderAlbums();
+                this.bindEvents();
+            },
+
+            bindEvents() {
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+
+                document.querySelectorAll('#category-filters button').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('#category-filters button').forEach(b => {
+                            b.classList.remove('active', 'btn-primary');
+                            b.classList.add('btn-outline-primary');
+                        });
+                        e.target.classList.remove('btn-outline-primary');
+                        e.target.classList.add('active', 'btn-primary');
+                        this.currentFilter.category = e.target.getAttribute('data-filter');
+                        this.renderAlbums();
+                    });
+                });
+
+                document.getElementById('school-filter').addEventListener('change', (e) => {
+                    this.currentFilter.school = e.target.value;
+                    this.renderAlbums();
+                });
+            },
+
+            checkLoginStatus() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                const authSection = document.getElementById('auth-section');
+                if (user) {
+                    authSection.innerHTML = `
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle rounded-pill px-4 w-100" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i> ${user.name} 老師
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow w-100 text-center text-lg-start">
+                                <li><a class="dropdown-item" href="#">會員專區</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="App.logout()">登出</a></li>
+                            </ul>
+                        </div>`;
+                }
+            },
+
+            handleLogin() {
+                const userVal = document.getElementById('username').value;
+                if (userVal) {
+                    const mockUser = { name: "陳大文", role: "admin" };
+                    localStorage.setItem('user', JSON.stringify(mockUser));
+                    bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                    this.checkLoginStatus();
+                } else {
+                    document.getElementById('login-error').innerText = '請輸入帳號';
+                }
+            },
+
+            logout() {
+                localStorage.removeItem('user');
+                location.reload();
+            },
+
+            loadNews() {
+                const container = document.getElementById('news-container');
+                let html = '';
+                
+                // 日期排序 (新 -> 舊)
+                const sortedNews = FULL_DATA.news.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                sortedNews.forEach(item => {
+                    html += `
+                        <div class="news-item">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge bg-secondary me-2">${item.category}</span>
+                                <span class="news-date">${item.date}</span>
+                            </div>
+                            <h5 class="fw-bold mb-1"><a href="#" class="text-decoration-none text-dark stretched-link">${item.title}</a></h5>
+                            <p class="mb-0 text-muted text-truncate">${item.desc}</p>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            },
+
+            renderAlbums() {
+                const container = document.getElementById('albums-container');
+                container.innerHTML = '';
+
+                const filtered = FULL_DATA.albums.filter(album => {
+                    const matchCat = this.currentFilter.category === 'all' || album.category === this.currentFilter.category;
+                    const matchSchool = this.currentFilter.school === 'all' || album.school === this.currentFilter.school;
+                    return matchCat && matchSchool;
+                });
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div class="col-12 text-center py-5 text-muted">沒有找到符合條件的相簿</div>`;
+                    return;
+                }
+
+                let html = '';
+                filtered.forEach(album => {
+                    const coverSrc = album.cover.startsWith('http') ? album.cover : UPLOAD_PATH + album.cover;
+                    
+                    html += `
+                        <div class="col-md-4 col-sm-6">
+                            <a href="${coverSrc}" class="album-card glightbox" data-gallery="gallery-${album.id}" data-title="${album.title}" data-description="${album.date} - ${album.school}">
+                                <div class="school-badge shadow-sm">${album.school}</div>
+                                <div class="album-img-wrapper">
+                                    <img src="${coverSrc}" class="album-img" alt="${album.title}" onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                                </div>
+                                <div class="album-info">
+                                    <h5 class="album-title">${album.title}</h5>
+                                    <div class="album-meta">
+                                        <span><i class="far fa-images me-1"></i> ${album.photos.length} 張照片</span>
+                                        <span><i class="far fa-clock me-1"></i> ${album.date}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="d-none">`;
+
+                    if(album.photos.length > 0) {
+                        album.photos.forEach((photo, idx) => {
+                            if (photo === album.cover) return;
+                            const photoSrc = photo.startsWith('http') ? photo : UPLOAD_PATH + photo;
+                            html += `<a href="${photoSrc}" class="glightbox" data-gallery="gallery-${album.id}" data-title="${album.title} (${idx+1})"></a>`;
+                        });
+                    }
+
+                    html += `</div></div>`;
+                });
+
+                container.innerHTML = html;
+                this.initLightbox();
+            },
+
+            initLightbox() {
+                if (this.lightbox) {
+                    this.lightbox.destroy(); 
+                }
+                this.lightbox = GLightbox({
+                    selector: '.glightbox', 
+                    touchNavigation: true, // 開啟觸控滑動支援
+                    loop: true,             
+                    zoomable: true,         
+                    closeOnOutsideClick: true
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
+    </script>
+</body>
+</html>
